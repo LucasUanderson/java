@@ -1,6 +1,5 @@
 package com.api.parkingcontrol.controllers;
 
-import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
@@ -10,7 +9,6 @@ import java.util.UUID;
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,8 +25,6 @@ import com.api.parkingcontrol.dtos.ParkingSpotDtop;
 import com.api.parkingcontrol.model.ParkingSpotModel;
 import com.api.parkingcontrol.services.ParkingSpotService;
 
-import net.bytebuddy.asm.Advice.OffsetMapping.Sort;
-
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/parking-spot")
@@ -41,7 +37,7 @@ public class ParkingSpotController {
 	}
 	
 	@PostMapping
-    public ResponseEntity<Object> saveParkingSpot(@RequestBody @Valid ParkingSpotDtop parkingSpotDto){
+    public ResponseEntity<Object> saveParkingSpot( ParkingSpotDtop parkingSpotDto){
     	
 		if(parkingSpotService.existsByLicensePlateCar(parkingSpotDto.getLicensePlateCar())) {
     		return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: License Plate car is already in use!");
